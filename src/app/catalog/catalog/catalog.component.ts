@@ -12,7 +12,7 @@ interface Option {
 }
 
 @Component({
-  selector: 'f2-catalog-components',
+  selector: 'mc-catalog-components',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss'],
   providers: [MessageService, ConfirmationService],
