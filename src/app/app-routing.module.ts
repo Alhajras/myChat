@@ -6,6 +6,10 @@ const routes: Routes = [
     path: 'catalog',
     loadChildren: async () => await import('./catalog/catalog/catalog.module').then(m => m.CatalogModule),
   },
+    {
+    path: 'chat',
+    loadChildren: async () => await import('./chat/chat.module').then(m => m.ChatModule),
+  },
 ]
 
 @NgModule({
