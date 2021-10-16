@@ -8,7 +8,7 @@ export class CustomerService {
     return [
       {
         id: 1000,
-        name: 'James Butt',
+        name: 'Alhajras',
         country: {
           name: 'Algeria',
           code: 'dz',
@@ -24,7 +24,7 @@ export class CustomerService {
       },
       {
         id: 1001,
-        name: 'Josephine Darakjy',
+        name: 'Mohammed',
         country: {
           name: 'Egypt',
           code: 'eg',
@@ -40,7 +40,7 @@ export class CustomerService {
       },
       {
         id: 1002,
-        name: 'Art Venere',
+        name: 'Ali',
         country: {
           name: 'Panama',
           code: 'pa',
