@@ -1,0 +1,11 @@
+// Originally based on the arya-blue theme provided by primeng
+
+// Sass variables unique to this theme. Mostly colors
+@import './variables';
+// Sass variables that will probably be reused for all themes: Sizes, spacing, font, alignment, etc
+@import '../common';
+
+// Css selectors and rules defined by primeng
+@import '../designer/_components';
+// Overrides to the above rules
+@import './_extensions';

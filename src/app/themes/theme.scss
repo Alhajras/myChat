@@ -1,0 +1,57 @@
+// here, we export css variables to be used within components
+
+[data-f2-theme=dark] {
+  @import "dark/theme";
+  @import "extensions";
+
+  --background-color: #{$shade650};
+  background-color: var(--background-color);
+
+  --surface-a: #{$shade650};
+  --surface-b: #{$shade500};
+  --surface-c: #{$hoverBg};
+  --surface-d: #{$shade600};
+  --surface-e: #{$shade650};
+  --surface-f: #{$shade650};
+
+  --text-color: #{$shade000};
+  --text-color-secondary: #{$shade100};
+  --primary-color: #{$primaryColor};
+  --primary-color-text: #{$primaryTextColor};
+  --warning-color: #{$f2WarningColor};
+  --font-family: #{$fontFamily};
+  --primary-input-border: #{$inputBorder};
+  --primary-input-background: #{$inputBg};
+  --warning: #{$warningButtonBg};
+  --success: #{$successButtonBg};
+  --danger: #{$dangerButtonBg};
+  --error: #{$f2ErrorColor};
+}
+
+[data-f2-theme=light] {
+  @import "light/theme";
+  @import "extensions";
+
+  --background-color: #{$shade000};
+  background-color: var(--background-color);
+
+  --surface-a: #{$shade000};
+  --surface-b: #{$shade100};
+  --surface-c: #{$shade200};
+  --surface-d: #{$shade300};
+  --surface-e: #{$shade000};
+  --surface-f: #{$shade000};
+
+  --text-color: #{$shade700};
+  --text-color-secondary: #{$shade600};
+  --primary-color: #{$primaryColor};
+  --primary-color-text: #{$primaryTextColor};
+  --warning-color: #{$f2WarningColor};
+  --font-family: #{$fontFamily};
+  --primary-input-border: #{$inputBorder};
+  --primary-input-background: #{$inputBg};
+  --warning: #{$warningButtonBg};
+  --success: #{$successButtonBg};
+  --danger: #{$dangerButtonBg};
+  --error: #{$f2ErrorColor};
+}
