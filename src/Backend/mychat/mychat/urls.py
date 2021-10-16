@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .base.api import FacebookWebhookView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", FacebookWebhookView.as_view(), name="angular-login"),
+
 ]
