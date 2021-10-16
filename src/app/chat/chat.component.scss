@@ -1,4 +1,5 @@
 .chatbox {
+  background-color: #323232;
   width: 1250px;
   height: 366px;
   margin: 0 20px 0 0;
@@ -7,7 +8,6 @@
   display: flex;
   flex-flow: column;
   border-radius: 10px 10px 0 0;
-  background: white;
   bottom: 0;
   transition: .1s ease-out;
 }
@@ -16,7 +16,7 @@
   padding: 0 0 0 95px;
   font-size: 15px;
   font-weight: bold;
-  color: #30649c;
+  color: white;
   text-shadow: 1px 1px 0 white;
   transition: .1s ease-out;
 }
@@ -43,13 +43,12 @@
 .message-sender {
   font-size: 12px;
   margin: 0 0 15px;
-  color: #30649c;
+  color: white;
   align-self: flex-start;
 }
 
 .message-sender a, .message-sender a:link, .message-sender a:visited, .chat-partner-name a, .chat-partner-name a:link, .chat-partner-name a:visited {
-  color: #30649c;
-  text-decoration: none;
+  color: white;
 }
 
 .message-box {
@@ -58,7 +57,7 @@
   position: relative;
   background: rgba(100, 170, 0, .1);
   border: 2px solid rgba(100, 170, 0, .1);
-  color: #6c6c6c;
+  color: white;
   font-size: 12px;
 }
 
