@@ -5,6 +5,7 @@ import { CountryService } from './service/country.service'
 import { CustomerService } from './service/customer.service'
 import { OverlayPanel } from 'primeng/overlaypanel'
 import { ProductService } from './service/product.service'
+import {WebSocketSubject} from "rxjs/internal-compatibility";
 
 interface Option {
   name: string
@@ -53,6 +54,28 @@ export class ChatComponent {
   constructor (private readonly countryService: CountryService, private readonly messageService: MessageService,
     private readonly customerService: CustomerService, private readonly productService: ProductService,
     private readonly confirmationService: ConfirmationService) {
+    var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
+    console.log(endpoint)
+    // let websocket = new WebSocket(endpoint)
+    let socket$ = new WebSocketSubject(endpoint)
+        socket$.subscribe(
+            (data) => console.log(data),
+            (err) => console.error(err),
+            () => console.warn('Completed!')
+        );
+        socket$.next({
+            event: 'events',
+            data: 'test',
+        });
+    // websocket.onopen = function (e){
+    //   console.log('opened', e)
+    // }
+    //     websocket.onerror = function (e){
+    //   console.log('error', e)
+    // }
+    //         websocket.onclose = function (e){
+    //   console.log('closed', e)
+    // }
     this.countries = this.countryService.getCountries()
     this.products = this.productService.getProductsSmall()
     this.customers = this.customerService.getCustomersLarge()
