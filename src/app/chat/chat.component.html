@@ -91,7 +91,7 @@
 <div class="p-grid">
   <div class="p-col-12">
     <div class="p-inputgroup">
-      <textarea pInputTextarea placeholder="Your Message" [autoResize]="false" rows="3" cols="30"></textarea>
+      <textarea pInputTextarea placeholder="Your Message" [ngModel]="textArea" [autoResize]="false" rows="3" cols="30"></textarea>
       <button type="button" pButton pRipple icon="pi pi-send" styleClass="p-button-warn"></button>
     </div>
   </div>
