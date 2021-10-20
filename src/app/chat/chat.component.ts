@@ -1,11 +1,12 @@
 import { ConfirmationService, MenuItem, Message, MessageService, PrimeIcons } from 'primeng/api'
-import { Customer, Product } from './models/model'
+import {ChatMessage, Customer, Product} from './models/model'
 import { Component } from '@angular/core'
 import { CountryService } from './service/country.service'
 import { CustomerService } from './service/customer.service'
 import { OverlayPanel } from 'primeng/overlaypanel'
 import { ProductService } from './service/product.service'
 import {WebSocketSubject} from "rxjs/internal-compatibility";
+import {ChatMessageService} from "./service/chat-message.service";
 
 interface Option {
   name: string
@@ -36,6 +37,7 @@ export class ChatComponent {
   listboxValue: any
   menuItems: MenuItem[]
   msgs: Message[]
+  messages: ChatMessage[]
   multiselectOptions: Option[]
   multiselectValue: Option[] = []
   products: Product[]
@@ -52,11 +54,12 @@ export class ChatComponent {
   tieredMenuItems: MenuItem[]
   toggleValue = false
   constructor (private readonly countryService: CountryService, private readonly messageService: MessageService,
-    private readonly customerService: CustomerService, private readonly productService: ProductService,
+    private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
     private readonly confirmationService: ConfirmationService) {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
+    this.messages = chatMessageServie.getMessages()
     let socket$ = new WebSocketSubject(endpoint)
         socket$.subscribe(
             (data) => console.log(data),

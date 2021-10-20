@@ -14,7 +14,7 @@
 </div>
 
 <div class="p-grid">
-    <div class="p-col-4">
+  <div class="p-col-4">
     <div class="p-card">
       <p-table #dt
                [value]="customers"
@@ -70,85 +70,30 @@
       </p-table>
     </div>
   </div>
-    <div class="chatbox p-col-6">
-          <div class="chat-messages">
-       <div class="message-box-holder">
-        <div class="message-box">
-          Hello
+  <div class="chatbox p-col-6">
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" class="message-box-holder">
+        <div *ngIf="message.channel === 'Local'" class="message-box">
+          <b>{{message.message}}</b>
+          <div>{{message.timestamp}}</div>
         </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-sender">
-           Mamun Khandaker
-         </div>
-        <div class="message-box message-partner">
-          Hi.
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-box">
-          How are you doing?
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-sender">
-           Mamun Khandaker
-         </div>
-        <div class="message-box message-partner">
-          I'm doing fine. How about you?
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-box">
-          I am fine.
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-box">
-          Do you know why I knocked you today?
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-box">
-          There's something important I would like to share with you. Do you have some time?
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-sender">
-           Mamun Khandaker
-         </div>
-        <div class="message-box message-partner">
-          Yeah sure. Let's meet in the Einstein cafe this evening and discuss the matter.
-        </div>
-      </div>
-
-      <div class="message-box-holder">
-        <div class="message-sender">
-           Mamun Khandaker
-         </div>
-        <div class="message-box message-partner">
-          I thought of coming to your place and discuss about it but I had to finish my projects and I didn't have enough time to go out of the house.
+        <div *ngIf="message.channel !== 'Local'" class="message-box message-partner">
+          <b>{{message.message}}</b>
+          <div>{{message.timestamp}}</div>
         </div>
       </div>
     </div>
 
 
-    </div>
+  </div>
 </div>
 
 <div class="p-grid">
   <div class="p-col-12">
-        <div class="p-inputgroup">
-        <textarea pInputTextarea placeholder="Your Message" [autoResize]="false" rows="3" cols="30"></textarea>
-            <button type="button" pButton pRipple icon="pi pi-send" styleClass="p-button-warn"></button>
-        </div>
+    <div class="p-inputgroup">
+      <textarea pInputTextarea placeholder="Your Message" [autoResize]="false" rows="3" cols="30"></textarea>
+      <button type="button" pButton pRipple icon="pi pi-send" styleClass="p-button-warn"></button>
+    </div>
   </div>
 </div>
 

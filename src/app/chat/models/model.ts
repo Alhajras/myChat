@@ -31,3 +31,10 @@ export interface Product {
   image?: string
   rating?: number
 }
+
+export interface ChatMessage {
+  message: string
+  timestamp: string
+  seen: boolean
+  channel: string
+}
