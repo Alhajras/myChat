@@ -1,15 +1,8 @@
 .chatbox {
   background-color: #323232;
-  width: 1250px;
   height: 366px;
-  margin: 0 20px 0 0;
   position: relative;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
   display: flex;
-  flex-flow: column;
-  border-radius: 10px 10px 0 0;
-  bottom: 0;
-  transition: .1s ease-out;
 }
 .chat-partner-name, .chat-group-name {
   flex: 1;

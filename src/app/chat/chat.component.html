@@ -70,8 +70,8 @@
       </p-table>
     </div>
   </div>
-  <div class="chatbox p-col-6">
-    <div class="chat-messages">
+  <div class="chatbox p-col-8">
+    <div #chatbox id='chatbox' class="chat-messages">
       <div *ngFor="let message of messages" class="message-box-holder">
         <div *ngIf="message.channel === 'Local'" class="message-box">
           <b>{{message.message}}</b>
@@ -83,8 +83,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
 

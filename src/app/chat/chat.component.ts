@@ -1,6 +1,6 @@
 import {ConfirmationService, MenuItem, Message, MessageService, PrimeIcons} from 'primeng/api'
 import {ChatMessage, Customer, Product} from './models/model'
-import {Component} from '@angular/core'
+import {Component, ElementRef, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core'
 import {CountryService} from './service/country.service'
 import {CustomerService} from './service/customer.service'
 import {OverlayPanel} from 'primeng/overlaypanel'
@@ -28,10 +28,13 @@ export class ChatComponent {
   selectedCustomers: Customer[] = []
   tieredMenuItems: MenuItem[]
   textArea = new FormControl('')
+  @ViewChildren('chatbox') messageBody!: any
 
   constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
               private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
               private readonly confirmationService: ConfirmationService) {
+    // this.messageBody.scrollTop = this.messageBody.scrollHeight - this.messageBody.clientHeight ;
+    //     this.messageBody.scrollTop = this.messageBody.scrollHeight  ;
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
@@ -143,6 +146,16 @@ export class ChatComponent {
 
   }
 
+  ngAfterViewInit () {
+    console.log(this.messageBody)
+
+    this.messageBody.changes.subscribe(() => {
+      if (this.messageBody.length > 0) {
+        // We focus the most recently inserted name input when it is created
+        // this.messageBody.last.nativeElement.focus()
+      }
+    })
+  }
 
   onRowSelect($event: any, op: OverlayPanel) {
     // @ts-expect-error
@@ -206,6 +219,14 @@ export class ChatComponent {
     }
     this.messages.push(message)
     this.textArea.setValue('')
-
+    console.log(this.messageBody)
   }
+
+  /**
+   * This is so expensive dont put heavy code
+   */
+  ngAfterViewChecked() {
+    this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight+68.75;
+  }
+
 }
