@@ -1,12 +1,14 @@
-import { ConfirmationService, MenuItem, Message, MessageService, PrimeIcons } from 'primeng/api'
+import {ConfirmationService, MenuItem, Message, MessageService, PrimeIcons} from 'primeng/api'
 import {ChatMessage, Customer, Product} from './models/model'
-import { Component } from '@angular/core'
-import { CountryService } from './service/country.service'
-import { CustomerService } from './service/customer.service'
-import { OverlayPanel } from 'primeng/overlaypanel'
-import { ProductService } from './service/product.service'
+import {Component} from '@angular/core'
+import {CountryService} from './service/country.service'
+import {CustomerService} from './service/customer.service'
+import {OverlayPanel} from 'primeng/overlaypanel'
+import {ProductService} from './service/product.service'
 import {WebSocketSubject} from "rxjs/internal-compatibility";
 import {ChatMessageService} from "./service/chat-message.service";
+import {FormControl} from "@angular/forms";
+import {timestamp} from "rxjs/operators";
 
 interface Option {
   name: string
@@ -25,25 +27,25 @@ export class ChatComponent {
   messages: ChatMessage[]
   selectedCustomers: Customer[] = []
   tieredMenuItems: MenuItem[]
-  textArea: any;
+  textArea = new FormControl('')
 
-  constructor (private readonly countryService: CountryService, private readonly messageService: MessageService,
-    private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
-    private readonly confirmationService: ConfirmationService) {
+  constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
+              private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
+              private readonly confirmationService: ConfirmationService) {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
     this.messages = chatMessageServie.getMessages()
     let socket$ = new WebSocketSubject(endpoint)
-        socket$.subscribe(
-            (data) => console.log(data),
-            (err) => console.error(err),
-            () => console.warn('Completed!')
-        );
-        socket$.next({
-            event: 'events',
-            data: 'test',
-        });
+    socket$.subscribe(
+      (data) => console.log(data),
+      (err) => console.error(err),
+      () => console.warn('Completed!')
+    );
+    socket$.next({
+      event: 'events',
+      data: 'test',
+    });
     // websocket.onopen = function (e){
     //   console.log('opened', e)
     // }
@@ -142,45 +144,68 @@ export class ChatComponent {
   }
 
 
-  onRowSelect ($event: any, op: OverlayPanel) {
+  onRowSelect($event: any, op: OverlayPanel) {
     // @ts-expect-error
-    this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: event.data.name })
+    this.messageService.add({severity: 'info', summary: 'Product Selected', detail: event.data.name})
     op.hide()
   }
 
 
-
-  showToast (severity: string) {
-    this.messageService.add({ severity, summary: 'Message Summary', detail: 'Message Detail', life: 3000 })
+  showToast(severity: string) {
+    this.messageService.add({severity, summary: 'Message Summary', detail: 'Message Detail', life: 3000})
   }
 
-  showConfirmPopup (target: HTMLButtonElement) {
+  showConfirmPopup(target: HTMLButtonElement) {
     this.confirmationService.confirm({
       target,
       message: 'Are you sure that you want to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' })
+        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'You have accepted'})
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' })
+        this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'})
       },
       key: 'popup',
     })
   }
 
-  showConfirmDialog () {
+  showConfirmDialog() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' })
+        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'You have accepted'})
       },
       reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'Rejected', detail: 'You have rejected' })
+        this.messageService.add({severity: 'info', summary: 'Rejected', detail: 'You have rejected'})
       },
       key: 'dialog',
     })
+  }
+
+  submitMessage() {
+    if (this.textArea.value === '') {
+      return
+    }
+
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+      + (currentdate.getMonth() + 1) + "/"
+      + currentdate.getFullYear() + " @ "
+      + currentdate.getHours() + ":"
+      + currentdate.getMinutes() + ":"
+      + currentdate.getSeconds();
+    const message: ChatMessage = {
+      message: this.textArea.value,
+      timestamp: currentdate.getHours() + ":"
+        + currentdate.getMinutes(),
+      seen: false,
+      channel: 'Local'
+    }
+    this.messages.push(message)
+    this.textArea.setValue('')
+
   }
 }

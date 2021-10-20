@@ -91,8 +91,15 @@
 <div class="p-grid">
   <div class="p-col-12">
     <div class="p-inputgroup">
-      <textarea pInputTextarea placeholder="Your Message" [ngModel]="textArea" [autoResize]="false" rows="3" cols="30"></textarea>
-      <button type="button" pButton pRipple icon="pi pi-send" styleClass="p-button-warn"></button>
+            <textarea
+              (keyup.enter)="submitMessage()"
+              [rows]="10"
+              [cols]="100"
+              placeholder="Your message..."
+              pInputTextarea
+              [formControl]='textArea' ngDefaultControl></textarea>
+      <button [disabled]="!textArea.value" (click)="submitMessage()" type="button" pButton pRipple icon="pi pi-send"
+              styleClass="p-button-warn"></button>
     </div>
   </div>
 </div>
