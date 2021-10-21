@@ -1,12 +1,13 @@
-# bot.views.py
 import json
-import requests, random, re
-from django.http import HttpResponse, JsonResponse
+
+from django.http import HttpResponse
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from rest_framework import serializers, routers, viewsets
+from ..chat.models import ChatUser, ChatMessage, Conversation
 
-# from .logic import LOGIC_RESPONSES
+router = routers.DefaultRouter
 
 VERIFY_TOKEN = "7711df715abcfa28ace91507da2d28d907a2d2db3c7c6639b0"  # generated above
 
@@ -71,3 +72,28 @@ class FacebookWebhookView(View):
           # if fb_user_txt:
           #   parse_and_send_fb_message(fb_user_id, fb_user_txt)
     return HttpResponse("Success", status=200)
+
+
+class UserSerializer(serializers.Serializer):
+  class Meta:
+    model = ChatUser
+
+class UserViewSet(viewsets.ModelViewSet):
+  queryset = ChatUser.objects.all()
+  serializer_class = UserSerializer
+
+class ChatMessageSerializer(serializers.Serializer):
+  class Meta:
+    model = ChatMessage
+
+class ChatMessageViewSet(viewsets.ModelViewSet):
+  queryset = ChatMessage.objects.all()
+  serializer_class = ChatMessageSerializer
+
+class ConversationSerializer(serializers.Serializer):
+  class Meta:
+    model = Conversation
+
+class ConversationViewSet(viewsets.ModelViewSet):
+  queryset = Conversation.objects.all()
+  serializer_class = ConversationSerializer
