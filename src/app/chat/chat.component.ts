@@ -199,6 +199,7 @@ export class ChatComponent {
   }
 
   submitMessage() {
+    this.textArea.setValue(this.textArea.value.trim())
     if (this.textArea.value === '') {
       return
     }
@@ -219,7 +220,6 @@ export class ChatComponent {
     }
     this.messages.push(message)
     this.textArea.setValue('')
-    console.log(this.messageBody)
   }
 
   /**
