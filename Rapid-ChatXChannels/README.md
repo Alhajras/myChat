@@ -76,3 +76,7 @@ $ source bin/activate
 
         ```
         **Close Redis** with `control` + `c` to quit
+
+# Backend
+  - User: admin
+  - Password: admin
