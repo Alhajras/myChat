@@ -23,7 +23,7 @@ interface Option {
 
 export class ChatComponent {
   customers: Customer[]
-  messages: ChatMessage[]
+  messages: ChatMessage[] = []
   selectedCustomers: Customer[] = []
   tieredMenuItems: MenuItem[]
   textArea = new FormControl('')
@@ -37,7 +37,14 @@ export class ChatComponent {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
-    this.messages = chatMessageServie.getMessages()
+        this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
+      data => {
+        this.messages = data.results
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
+
     let socket$ = new WebSocketSubject(endpoint)
     socket$.subscribe(
       (data) => console.log(data),
