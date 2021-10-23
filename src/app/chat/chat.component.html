@@ -73,15 +73,20 @@
   <div class="chatbox p-col-8">
     <div #chatbox id='chatbox' class="chat-messages">
       <div *ngFor="let message of messages" class="message-box-holder">
-        <div *ngIf="message.channel === 'Local'" class="message-box">
-          <b>{{message.message}}</b>
-          <div>{{message.timestamp}}</div>
+        <div *ngIf="message.sender===1" class="message-box">
+          <p-avatar shape="circle" icon="pi pi-user"></p-avatar>
+          <b class="p-ml-2">{{message.message}}</b>
+          <div class="p-mt-2">{{message.timestamp}}</div>
         </div>
-        <div *ngIf="message.channel !== 'Local'" class="message-box message-partner">
-          <b>{{message.message}}</b>
-          <div>{{message.timestamp}}</div>
+        <div *ngIf="message.sender!==1" class="message-box message-partner">
+          <p-avatar shape="circle" icon="pi pi-user"></p-avatar>
+          <b class="p-ml-2">{{message.message}}</b>
+          <div class="p-mt-2">{{message.timestamp}}</div>
         </div>
       </div>
+      <p-divider style="width: 100%" align="center">
+        <span class="p-tag">New</span>
+      </p-divider>
     </div>
   </div>
 </div>
