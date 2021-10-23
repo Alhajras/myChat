@@ -8,7 +8,6 @@ import {ProductService} from './service/product.service'
 import {WebSocketSubject} from "rxjs/internal-compatibility";
 import {ChatMessageService} from "./service/chat-message.service";
 import {FormControl} from "@angular/forms";
-import {timestamp} from "rxjs/operators";
 
 interface Option {
   name: string

@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router'
 import { TooltipModule } from 'primeng/tooltip'
 import { TreeModule } from 'primeng/tree'
 import { TreeTableModule } from 'primeng/treetable'
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 
 /**
@@ -20,6 +22,7 @@ import { TreeTableModule } from 'primeng/treetable'
   ],
   imports: [
     CommonModule,
+    DividerModule,
     ListboxModule,
     PrimeNgModule,
     FormsModule,
@@ -28,10 +31,10 @@ import { TreeTableModule } from 'primeng/treetable'
     TooltipModule,
     TreeModule,
     TreeTableModule,
+    PasswordModule
   ],
   exports: [
-    PrimeNgModule, ReactiveFormsModule, CommonModule, FormsModule,
-  ],
+    PrimeNgModule, ReactiveFormsModule, CommonModule, FormsModule],
   providers: [
     ConfirmationService,
     PrimeNgModule, ReactiveFormsModule, CommonModule],
