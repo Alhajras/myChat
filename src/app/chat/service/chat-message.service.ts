@@ -28,6 +28,13 @@ export class ChatMessageService {
     return this.get(path, params)
   }
 
+    getUsers<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
+    if (!params.has(PAGE_SIZE_PARAM)) {
+      params = params.set(PAGE_SIZE_PARAM, PAGE_SIZE)
+    }
+    return this.get(path, params)
+  }
+
   postMessage(project: Partial<ChatMessage>): Observable<ChatMessage> {
     return this.post<ChatMessage>(this.endpointPath, project)
   }

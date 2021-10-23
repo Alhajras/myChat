@@ -17,7 +17,7 @@
   <div class="p-col-4">
     <div class="p-card">
       <p-table #dt
-               [value]="customers"
+               [value]="users"
                [(selection)]="selectedCustomers"
                dataKey="id"
                styleClass="p-datatable-customers"
@@ -31,7 +31,7 @@
                [globalFilterFields]="['name','country.name','representative.name','status']">
         <ng-template pTemplate="caption">
           <div class="table-header">
-            List of Customers
+            Contacts
             <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" placeholder="Global Search"/>
@@ -49,13 +49,13 @@
             <th style="width: 8rem"></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-customer>
+        <ng-template pTemplate="body" let-user>
           <tr class="p-selectable-row">
             <td>
-              <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+              <p-tableCheckbox [value]="user"></p-tableCheckbox>
             </td>
             <td>
-              {{customer.name}}
+              {{user.first_name}} ({{user.last_name}})
             </td>
             <td style="text-align: center">
               <button pButton type="button" icon="pi pi-cog"></button>

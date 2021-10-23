@@ -43,11 +43,11 @@ export interface ChatMessage {
 
 }
 //
-// export interface ChatUser {
-//   first_name: string,
-//   last_name: string,
-//   email: string
-// }
+export interface ChatUser {
+  first_name: string,
+  last_name: string,
+  email: string
+}
 //
 // export interface Conversation {
 //   created_at: string,

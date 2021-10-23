@@ -1,5 +1,5 @@
 import {ConfirmationService, MenuItem, MessageService} from 'primeng/api'
-import {ChatMessage, Customer} from './models/model'
+import {ChatMessage, ChatUser, Customer} from './models/model'
 import {Component, ViewChildren} from '@angular/core'
 import {CountryService} from './service/country.service'
 import {CustomerService} from './service/customer.service'
@@ -23,6 +23,7 @@ interface Option {
 
 export class ChatComponent {
   customers: Customer[]
+  users: ChatUser[] = []
   messages: ChatMessage[] = []
   selectedCustomers: Customer[] = []
   tieredMenuItems: MenuItem[]
@@ -40,6 +41,14 @@ export class ChatComponent {
     this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
       data => {
         this.messages = data
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
+
+    this.chatMessageServie.getUsers<ChatUser>('users').subscribe(
+      data => {
+        this.users = data
       },
       (error: unknown) => {
         console.log(error)
