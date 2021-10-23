@@ -74,25 +74,33 @@ class FacebookWebhookView(View):
     return HttpResponse("Success", status=200)
 
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = ChatUser
+    fields = "__all__"
+
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = ChatUser.objects.all()
   serializer_class = UserSerializer
 
-class ChatMessageSerializer(serializers.Serializer):
+
+class ChatMessageSerializer(serializers.ModelSerializer):
   class Meta:
     model = ChatMessage
+    fields = "__all__"
+
 
 class ChatMessageViewSet(viewsets.ModelViewSet):
   queryset = ChatMessage.objects.all()
   serializer_class = ChatMessageSerializer
 
-class ConversationSerializer(serializers.Serializer):
+
+class ConversationSerializer(serializers.ModelSerializer):
   class Meta:
     model = Conversation
+    fields = "__all__"
+
 
 class ConversationViewSet(viewsets.ModelViewSet):
   queryset = Conversation.objects.all()

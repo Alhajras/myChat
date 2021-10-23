@@ -39,7 +39,8 @@ export class ChatComponent {
     // let websocket = new WebSocket(endpoint)
         this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
       data => {
-        this.messages = data.results
+        this.messages = data
+        console.log(data)
       },
       (error: unknown) => {
         console.log(error)
@@ -153,8 +154,6 @@ export class ChatComponent {
   }
 
   ngAfterViewInit () {
-    console.log(this.messageBody)
-
     this.messageBody.changes.subscribe(() => {
       if (this.messageBody.length > 0) {
         // We focus the most recently inserted name input when it is created

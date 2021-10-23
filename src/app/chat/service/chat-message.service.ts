@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core'
 import {Observable} from "rxjs";
-import {ListResponse} from "./list-response.model";
 import {HttpClient, HttpParams} from "@angular/common/http";
 
 const PAGE_SIZE = 25
@@ -18,10 +17,13 @@ export class ChatMessageService {
   }
 
   request<T>(method: string, path: string, params?: HttpParams, body?: any): Observable<T> {
-    return this.httpClient.request<T>(method, this.baseUrl + path, {body, withCredentials: true, params})
+         console.log(this.baseUrl + path)
+    let request = this.httpClient.request<T>(method, this.baseUrl + path, {body, withCredentials: true, params}).toPromise()
+      .then(a => console.log(a))
+      return this.httpClient.request<T>(method, this.baseUrl + path, {body, withCredentials: true, params})
   }
 
-  getMessages<T>(path: string, params: HttpParams = new HttpParams()): Observable<ListResponse<T>> {
+  getMessages<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
     if (!params.has(PAGE_SIZE_PARAM)) {
       params = params.set(PAGE_SIZE_PARAM, PAGE_SIZE)
     }
