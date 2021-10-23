@@ -37,4 +37,21 @@ export interface ChatMessage {
   timestamp: string
   seen: boolean
   channel: string
+  deleted: false
+  sender: number,
+  conversation: number
+
 }
+//
+// export interface ChatUser {
+//   first_name: string,
+//   last_name: string,
+//   email: string
+// }
+//
+// export interface Conversation {
+//   created_at: string,
+//   deleted: false,
+//   participant_1: ChatUser,
+//   participant_2: ChatUser
+// }

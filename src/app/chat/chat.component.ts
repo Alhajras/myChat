@@ -1,6 +1,6 @@
-import {ConfirmationService, MenuItem, Message, MessageService, PrimeIcons} from 'primeng/api'
-import {ChatMessage, Customer, Product} from './models/model'
-import {Component, ElementRef, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core'
+import {ConfirmationService, MenuItem, MessageService} from 'primeng/api'
+import {ChatMessage, Customer} from './models/model'
+import {Component, ViewChildren} from '@angular/core'
 import {CountryService} from './service/country.service'
 import {CustomerService} from './service/customer.service'
 import {OverlayPanel} from 'primeng/overlaypanel'
@@ -37,10 +37,9 @@ export class ChatComponent {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
-        this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
+    this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
       data => {
         this.messages = data
-        console.log(data)
       },
       (error: unknown) => {
         console.log(error)
@@ -153,7 +152,7 @@ export class ChatComponent {
 
   }
 
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     this.messageBody.changes.subscribe(() => {
       if (this.messageBody.length > 0) {
         // We focus the most recently inserted name input when it is created
@@ -221,9 +220,19 @@ export class ChatComponent {
       timestamp: currentdate.getHours() + ":"
         + currentdate.getMinutes(),
       seen: false,
-      channel: 'Local'
+      channel: 'Local',
+      deleted: false,
+      sender: 1,
+      conversation: 1
     }
-    this.messages.push(message)
+    this.chatMessageServie.postMessage(message).subscribe(
+      data => {
+        console.log(message)
+        this.messages.push(message)
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
     this.textArea.setValue('')
   }
 
@@ -231,7 +240,7 @@ export class ChatComponent {
    * This is so expensive dont put heavy code
    */
   ngAfterViewChecked() {
-    this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight+68.75;
+    this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight + 68.75;
   }
 
 }
