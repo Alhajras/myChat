@@ -14,12 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from .api import FacebookWebhookView, router, UserViewSet, ConversationViewSet, ChatMessageViewSet
+from .api import FacebookWebhookView, UserViewSet, ConversationViewSet, ChatMessageViewSet
 
 from django.urls import path, include
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
