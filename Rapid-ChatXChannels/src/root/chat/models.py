@@ -15,13 +15,14 @@ class ChatUser(models.Model):
 
 
 class Conversation(models.Model):
-  participant_1 = models.ForeignKey(ChatUser,on_delete=models.PROTECT, related_name='participant_1')
-  participant_2 = models.ForeignKey(ChatUser,on_delete=models.PROTECT, related_name='participant_2')
+  participant_1 = models.ForeignKey(ChatUser, on_delete=models.PROTECT, related_name='participant_1')
+  participant_2 = models.ForeignKey(ChatUser, on_delete=models.PROTECT, related_name='participant_2')
   created_at = models.DateTimeField(auto_now_add=True)
   deleted = models.BooleanField()
 
 class ChatMessage(models.Model):
   message = models.TextField()
+  sender = models.ForeignKey(ChatUser, on_delete=models.PROTECT, related_name='sender')
   timestamp = models.DateTimeField(auto_now_add=True)
   seen = models.BooleanField(default=False)
   channel = models.CharField(

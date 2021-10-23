@@ -31,7 +31,7 @@ urlpatterns = [
   path('admin/', admin.site.urls),
   path('messages/', include('root.chat.urls')),
   path("verify/", FacebookWebhookView.as_view(), name="angular-login"),
-  path('api', include(router.urls)),
+  path('api/', include(router.urls)),
   path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
