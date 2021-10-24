@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from .api import FacebookWebhookView, UserViewSet, ConversationViewSet, ChatMessageViewSet
+from . import views
 
 from django.urls import path, include
 from rest_framework import routers
 
-# Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'conversations', ConversationViewSet)
@@ -32,6 +32,11 @@ urlpatterns = [
   path('messages/', include('root.chat.urls')),
   path("verify/", FacebookWebhookView.as_view(), name="angular-login"),
   path('api/', include(router.urls)),
-  path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+  path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+
+  path("api/auth/login/", views.BrowserLoginView.as_view(), name="angular-login"),
+  path("api/auth/logout/", views.BrowserLogoutView.as_view(), name="angular-logout"),
+  path("api/auth/", include("djoser.urls.jwt")),
 
 ]

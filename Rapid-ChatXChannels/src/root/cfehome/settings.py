@@ -38,15 +38,46 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'root.chat',
-  'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework',
+    'djoser',
 
 ]
+
+# Django REST framework
+# Simple JSON Web Token authentication
+SIMPLE_JWT = {"AUTH_HEADER_TYPES": ("JWT",)}
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    # Use session auth for the browsable API and JWT auth otherwise
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+}
+
+# Headers
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SESSION_COOKIE_NAME = "id"
+
+# This is to remove the error, CSRF token missing
+CSRF_COOKIE_NAME = "token"
+CSRF_HEADER_NAME = "HTTP_X_TOKEN"
+
+# Configurable settings
+TIME_ZONE = "Europe/Berlin"
+
+# djoser
+CREATE_SESSION_ON_LOGIN = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    "django.middleware.csrf.CsrfViewMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

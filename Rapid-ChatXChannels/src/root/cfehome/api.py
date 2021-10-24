@@ -1,10 +1,11 @@
 import json
-
+from django.contrib.auth import authenticate
 from django.http import HttpResponse
-from django.views.generic import View
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
 from rest_framework import serializers, routers, viewsets
+
 from ..chat.models import ChatUser, ChatMessage, Conversation
 
 router = routers.DefaultRouter
@@ -79,7 +80,7 @@ class UserSerializer(serializers.ModelSerializer):
     model = ChatUser
     fields = "__all__"
 
-
+# This is view should be moved to views
 class UserViewSet(viewsets.ModelViewSet):
   queryset = ChatUser.objects.all()
   serializer_class = UserSerializer
@@ -90,7 +91,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
     model = ChatMessage
     fields = "__all__"
 
-
+# This is view should be moved to views
 class ChatMessageViewSet(viewsets.ModelViewSet):
   queryset = ChatMessage.objects.all()
   serializer_class = ChatMessageSerializer
@@ -102,6 +103,25 @@ class ConversationSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 
+# This is view should be moved to views
 class ConversationViewSet(viewsets.ModelViewSet):
   queryset = Conversation.objects.all()
   serializer_class = ConversationSerializer
+
+
+class LoginSerializer(serializers.Serializer):
+  password = serializers.CharField(required=True, style={"input_type": "password"}, write_only=True)
+  username = serializers.CharField(required=True)
+  default_error_messages = {
+    "invalid_credentials": "We were unable to log you in with the username and password you provided",
+  }
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.user = None
+
+  def validate(self, attrs):
+    self.user = authenticate(request=self.context.get("request"), **attrs)
+    if self.user and self.user.is_active:
+      return attrs
+    self.fail("invalid_credentials")
