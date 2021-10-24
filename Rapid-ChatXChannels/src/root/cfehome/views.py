@@ -4,11 +4,13 @@ from django.contrib import auth
 from django.contrib.auth import login, logout
 from django.contrib.auth import models as auth_models
 from django.contrib.auth import user_logged_in
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import QuerySet
 from django.db.models.aggregates import Sum
-from django.http import Http404
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django_filters.rest_framework import DjangoFilterBackend
@@ -54,3 +56,14 @@ class BrowserLogoutView(GenericAPIView):
     def post(self, request: Request, **kwargs) -> Response:
         logout(request)
         return Response(status=HTTP_200_OK)
+
+
+@login_required
+def profile(request: HttpRequest, name: str) -> HttpResponse:
+    user = get_object_or_404(User, username=name)
+    # profile = models.Profile.of_user(user)
+    return render(
+        request,
+        "base/profile.html",
+        {"viewed_profile": profile, "projects": "sdfsdf"},
+    )

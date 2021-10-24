@@ -1,12 +1,15 @@
-import json
-from django.contrib.auth import authenticate
+from ..chat.models import ChatUser, ChatMessage, Conversation
+from django.contrib import auth
+from django.contrib.auth import authenticate, get_user_model
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from rest_framework import serializers, routers, viewsets
-
-from ..chat.models import ChatUser, ChatMessage, Conversation
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
+import json
 
 router = routers.DefaultRouter
 
@@ -76,14 +79,22 @@ class FacebookWebhookView(View):
 
 
 class UserSerializer(serializers.ModelSerializer):
+  user_id = serializers.IntegerField(source="id")
+
   class Meta:
-    model = ChatUser
+    model = get_user_model()
     fields = "__all__"
+
 
 # This is view should be moved to views
 class UserViewSet(viewsets.ModelViewSet):
-  queryset = ChatUser.objects.all()
+  lookup_field = "username"
+  queryset = auth.get_user_model().objects.all().order_by("id")
   serializer_class = UserSerializer
+
+  @action(["get"], detail=False)
+  def me(self, request: Request, *_, **__) -> Response:
+    return Response(self.get_serializer_class()(request.user).data)
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):

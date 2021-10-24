@@ -34,7 +34,7 @@ urlpatterns = [
   path('api/', include(router.urls)),
   path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-
+  path("user/<str:name>/", views.profile, name="profile"),
   path("api/auth/login/", views.BrowserLoginView.as_view(), name="angular-login"),
   path("api/auth/logout/", views.BrowserLogoutView.as_view(), name="angular-logout"),
   path("api/auth/", include("djoser.urls.jwt")),
