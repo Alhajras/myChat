@@ -40,13 +40,6 @@ export class ChatComponent {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
-    this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
-      data => {
-        this.messages = data
-      },
-      (error: unknown) => {
-        console.log(error)
-      })
 
     this.chatMessageServie.getList<ChatUser>('users').subscribe(
       data => {
@@ -262,4 +255,13 @@ export class ChatComponent {
     this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight + 68.75;
   }
 
+  openConversation() {
+    this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
+      data => {
+        this.messages = data
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
+  }
 }
