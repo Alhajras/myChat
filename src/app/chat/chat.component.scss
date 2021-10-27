@@ -78,3 +78,11 @@
   border-bottom: 10px solid rgba(0, 114, 135, .2);
   border-left: none;
 }
+
+
+.empty-conversation {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: white;
+}

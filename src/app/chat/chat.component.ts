@@ -30,6 +30,7 @@ export class ChatComponent {
   tieredMenuItems: MenuItem[]
   textArea = new FormControl('')
   @ViewChildren('chatbox') messageBody!: any
+  selectedConversation!: Conversation;
 
   constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
               private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,

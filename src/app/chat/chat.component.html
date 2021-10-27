@@ -16,19 +16,70 @@
 <div class="p-grid">
   <div class="p-col-4">
     <div class="p-card">
-      <p-table #dt
-               [value]="conversations"
-               [(selection)]="selectedCustomers"
-               dataKey="id"
-               styleClass="p-datatable-customers"
-               [rowHover]="true"
-               [rows]="10"
-               [showCurrentPageReport]="true"
-               [rowsPerPageOptions]="[10,25,50]"
-               [paginator]="true"
-               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-               [filterDelay]="0"
-               [globalFilterFields]="['name','country.name','representative.name','status']">
+      <!--      <p-table #dt-->
+      <!--               [(selection)]="selectedConversation"-->
+      <!--               [value]="conversations"-->
+      <!--               dataKey="id"-->
+      <!--               styleClass="p-datatable-customers"-->
+      <!--               [rowHover]="true"-->
+      <!--               [rows]="10"-->
+      <!--               selectionMode="single"-->
+      <!--               [showCurrentPageReport]="true"-->
+      <!--               [rowsPerPageOptions]="[10,25,50]"-->
+      <!--               [paginator]="true"-->
+      <!--               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"-->
+      <!--               [filterDelay]="0"-->
+      <!--               [globalFilterFields]="['name','country.name','representative.name','status']">-->
+      <!--        <ng-template pTemplate="caption">-->
+      <!--          <div class="table-header">-->
+      <!--            Contacts-->
+      <!--            <span class="p-input-icon-left">-->
+      <!--                            <i class="pi pi-search"></i>-->
+      <!--                            <input pInputText type="text" placeholder="Global Search"/>-->
+      <!--                        </span>-->
+      <!--          </div>-->
+      <!--        </ng-template>-->
+      <!--        <ng-template pTemplate="header">-->
+      <!--          <tr>-->
+      <!--            <th style="width: 3rem">-->
+      <!--              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>-->
+      <!--            </th>-->
+      <!--            <th pSortableColumn="name">Name-->
+      <!--              <p-sortIcon field="name"></p-sortIcon>-->
+      <!--            </th>-->
+      <!--            <th style="width: 8rem"></th>-->
+      <!--          </tr>-->
+      <!--        </ng-template>-->
+      <!--        <ng-template pTemplate="body" let-conversation>-->
+      <!--          <tr class="p-selectable-row">-->
+      <!--            <td>-->
+      <!--              <p-tableCheckbox [value]="conversation"></p-tableCheckbox>-->
+      <!--            </td>-->
+      <!--            <td *ngIf="conversation.participant_1.id != users[0].id">-->
+      <!--              {{conversation.participant_1.first_name}} ({{conversation.participant_1.last_name}})-->
+      <!--            </td>-->
+      <!--            <td *ngIf="conversation.participant_2.id != users[0].id">-->
+      <!--              {{conversation.participant_2.first_name}} ({{conversation.participant_2.last_name}})-->
+      <!--            </td>-->
+      <!--            <td style="text-align: center">-->
+      <!--              <button pButton type="button" icon="pi pi-cog"></button>-->
+      <!--            </td>-->
+      <!--          </tr>-->
+      <!--        </ng-template>-->
+      <!--        <ng-template pTemplate="emptymessage">-->
+      <!--          <tr>-->
+      <!--            <td colspan="8">No customers found.</td>-->
+      <!--          </tr>-->
+      <!--        </ng-template>-->
+      <!--        <ng-template pTemplate="emptymessage">-->
+      <!--          <tr>-->
+      <!--            <td colspan="8">No Contacts.</td>-->
+      <!--          </tr>-->
+      <!--        </ng-template>-->
+      <!--      </p-table>-->
+
+      <p-table [value]="conversations" selectionMode="single" [(selection)]="selectedConversation" dataKey="name"
+               responsiveLayout="scroll">
         <ng-template pTemplate="caption">
           <div class="table-header">
             Contacts
@@ -40,34 +91,26 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 3rem">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th pSortableColumn="name">Name
-              <p-sortIcon field="name"></p-sortIcon>
-            </th>
-            <th style="width: 8rem"></th>
+            <th>Contact</th>
+            <th style="width: 8rem">Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-conversation>
-          <tr class="p-selectable-row">
-            <td>
-              <p-tableCheckbox [value]="conversation"></p-tableCheckbox>
-            </td>
-            <td *ngIf="conversation.participant_1.id != users[0].id">
+          <tr
+[pSelectableRow]="conversation">
+            <td *ngIf="conversation.participant_1.id != users[0].id"
+                [pTooltip]='conversation.participant_1.email'
+                tooltipPosition="bottom">
               {{conversation.participant_1.first_name}} ({{conversation.participant_1.last_name}})
             </td>
-            <td *ngIf="conversation.participant_2.id != users[0].id">
+            <td *ngIf="conversation.participant_2.id != users[0].id"
+                [pTooltip]='conversation.participant_2.email'
+                tooltipPosition="bottom">
               {{conversation.participant_2.first_name}} ({{conversation.participant_2.last_name}})
             </td>
             <td style="text-align: center">
               <button pButton type="button" icon="pi pi-cog"></button>
             </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="8">No customers found.</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -80,6 +123,9 @@
   </div>
   <div class="chatbox p-col-8">
     <div #chatbox id='chatbox' class="chat-messages">
+      <div *ngIf="!messages.length" class="empty-conversation">
+        Select a conversation from contacts.
+      </div>
       <div *ngFor="let message of messages" class="message-box-holder">
         <div *ngIf="message.sender===1" class="message-box">
           <p-avatar shape="circle" icon="pi pi-user"></p-avatar>
