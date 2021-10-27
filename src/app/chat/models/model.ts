@@ -40,18 +40,18 @@ export interface ChatMessage {
   deleted: false
   sender: number,
   conversation: number
-
 }
-//
+
 export interface ChatUser {
   first_name: string,
   last_name: string,
   email: string
+  id: number
 }
-//
-// export interface Conversation {
-//   created_at: string,
-//   deleted: false,
-//   participant_1: ChatUser,
-//   participant_2: ChatUser
-// }
+
+export interface Conversation {
+  created_at: string,
+  deleted: false,
+  participant_1: number,
+  participant_2: number
+}

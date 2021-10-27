@@ -21,14 +21,7 @@ export class ChatMessageService {
     return this.httpClient.request<T>(method, this.baseUrl + path, {body, withCredentials: true, params})
   }
 
-  getMessages<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
-    if (!params.has(PAGE_SIZE_PARAM)) {
-      params = params.set(PAGE_SIZE_PARAM, PAGE_SIZE)
-    }
-    return this.get(path, params)
-  }
-
-    getUsers<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
+  getList<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
     if (!params.has(PAGE_SIZE_PARAM)) {
       params = params.set(PAGE_SIZE_PARAM, PAGE_SIZE)
     }

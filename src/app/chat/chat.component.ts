@@ -1,5 +1,5 @@
 import {ConfirmationService, MenuItem, MessageService} from 'primeng/api'
-import {ChatMessage, ChatUser, Customer} from './models/model'
+import {ChatMessage, ChatUser, Conversation, Customer} from './models/model'
 import {Component, ViewChildren} from '@angular/core'
 import {CountryService} from './service/country.service'
 import {CustomerService} from './service/customer.service'
@@ -25,6 +25,7 @@ export class ChatComponent {
   customers: Customer[]
   users: ChatUser[] = []
   messages: ChatMessage[] = []
+  conversations: Conversation[] = []
   selectedCustomers: Customer[] = []
   tieredMenuItems: MenuItem[]
   textArea = new FormControl('')
@@ -38,7 +39,7 @@ export class ChatComponent {
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
     console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
-    this.chatMessageServie.getMessages<ChatMessage>('messages').subscribe(
+    this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
       data => {
         this.messages = data
       },
@@ -46,9 +47,17 @@ export class ChatComponent {
         console.log(error)
       })
 
-    this.chatMessageServie.getUsers<ChatUser>('users').subscribe(
+    this.chatMessageServie.getList<ChatUser>('users').subscribe(
       data => {
         this.users = data
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
+
+    this.chatMessageServie.getList<Conversation>('conversations').subscribe(
+      data => {
+        this.conversations = data
       },
       (error: unknown) => {
         console.log(error)

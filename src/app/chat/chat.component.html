@@ -17,7 +17,7 @@
   <div class="p-col-4">
     <div class="p-card">
       <p-table #dt
-               [value]="users"
+               [value]="conversations"
                [(selection)]="selectedCustomers"
                dataKey="id"
                styleClass="p-datatable-customers"
@@ -49,13 +49,16 @@
             <th style="width: 8rem"></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-user>
+        <ng-template pTemplate="body" let-conversation>
           <tr class="p-selectable-row">
             <td>
-              <p-tableCheckbox [value]="user"></p-tableCheckbox>
+              <p-tableCheckbox [value]="conversation"></p-tableCheckbox>
             </td>
-            <td>
-              {{user.first_name}} ({{user.last_name}})
+            <td *ngIf="conversation.participant_1.id != users[0].id">
+              {{conversation.participant_1.first_name}} ({{conversation.participant_1.last_name}})
+            </td>
+            <td *ngIf="conversation.participant_2.id != users[0].id">
+              {{conversation.participant_2.first_name}} ({{conversation.participant_2.last_name}})
             </td>
             <td style="text-align: center">
               <button pButton type="button" icon="pi pi-cog"></button>
@@ -65,6 +68,11 @@
         <ng-template pTemplate="emptymessage">
           <tr>
             <td colspan="8">No customers found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No Contacts.</td>
           </tr>
         </ng-template>
       </p-table>

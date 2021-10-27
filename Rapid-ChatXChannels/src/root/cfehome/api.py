@@ -78,6 +78,13 @@ class FacebookWebhookView(View):
     return HttpResponse("Success", status=200)
 
 
+
+class ChatUserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = ChatUser
+    fields = "__all__"
+
+
 class UserSerializer(serializers.ModelSerializer):
   user_id = serializers.IntegerField(source="id")
 
@@ -109,6 +116,9 @@ class ChatMessageViewSet(viewsets.ModelViewSet):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
+  participant_1 = ChatUserSerializer(read_only=True)
+  participant_2 = ChatUserSerializer(read_only=True)
+
   class Meta:
     model = Conversation
     fields = "__all__"
