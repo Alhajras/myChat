@@ -8,6 +8,7 @@ import {ProductService} from './service/product.service'
 import {WebSocketSubject} from "rxjs/internal-compatibility";
 import {ChatMessageService} from "./service/chat-message.service";
 import {FormControl} from "@angular/forms";
+import {HttpParams} from "@angular/common/http";
 
 interface Option {
   name: string
@@ -32,6 +33,8 @@ export class ChatComponent {
   @ViewChildren('chatbox') messageBody!: any
   selectedConversation!: Conversation;
   totalMessages = 0
+  nextOffset = 0
+  scrollDown = true
 
   constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
               private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
@@ -240,7 +243,7 @@ export class ChatComponent {
     }
     this.chatMessageServie.postMessage(message).subscribe(
       data => {
-        console.log(message)
+        this.scrollDown = true
         this.messages.push(message)
       },
       (error: unknown) => {
@@ -253,18 +256,36 @@ export class ChatComponent {
    * This is so expensive dont put heavy code
    */
   ngAfterViewChecked() {
-    this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight + 68.75;
+    console.log(this.scrollDown)
+    if (this.scrollDown) {
+      this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight + 68.75;
+    }
   }
 
   openConversation() {
     this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
       data => {
-        this.messages = data.results
+        this.messages = data.results.reverse()
         this.totalMessages = data.count
+        if (data.next) {
+          this.nextOffset = +data.next.split('offset=')[1]
+        }
       },
       (error: unknown) => {
         console.log(error)
       })
   }
 
+  loadMore() {
+    this.scrollDown = false
+    const params = new HttpParams({fromObject: {offset: this.nextOffset}})
+    this.chatMessageServie.getList<ChatMessage>('messages', params).subscribe(
+      data => {
+        this.messages = data.results.reverse().concat(this.messages)
+        this.totalMessages = data.count
+      },
+      (error: unknown) => {
+        console.log(error)
+      })
+  }
 }

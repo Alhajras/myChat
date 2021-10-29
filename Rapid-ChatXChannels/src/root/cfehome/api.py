@@ -111,7 +111,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
 
 # This is view should be moved to views
 class ChatMessageViewSet(viewsets.ModelViewSet):
-  queryset = ChatMessage.objects.all()
+  queryset = ChatMessage.objects.all().order_by("-id")
   serializer_class = ChatMessageSerializer
 
 
