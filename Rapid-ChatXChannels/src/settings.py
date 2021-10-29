@@ -120,3 +120,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 ASGI_APPLICATION = "root.cfehome.asgi.application"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 50
+}

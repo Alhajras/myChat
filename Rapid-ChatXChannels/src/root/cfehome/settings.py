@@ -49,12 +49,15 @@ INSTALLED_APPS = [
 SIMPLE_JWT = {"AUTH_HEADER_TYPES": ("JWT",)}
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-    # Use session auth for the browsable API and JWT auth otherwise
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ],
+  "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+  'PAGE_SIZE': 50,
+
+  # Use session auth for the browsable API and JWT auth otherwise
+  "DEFAULT_AUTHENTICATION_CLASSES": [
+    "rest_framework_simplejwt.authentication.JWTAuthentication",
+    "rest_framework.authentication.SessionAuthentication",
+  ],
 }
 
 # Headers
