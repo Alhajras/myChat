@@ -5,7 +5,6 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {
     path: 'catalog',
-    canActivate: [IsAuthenticatedGuard],
     loadChildren: async () => await import('./catalog/catalog/catalog.module').then(m => m.CatalogModule),
   },
     {

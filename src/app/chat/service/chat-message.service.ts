@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core'
 import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {ChatMessage} from "../models/model";
+import {ListResponse} from "../models/list-response.model";
 
-const PAGE_SIZE = 25
+const PAGE_SIZE = 50
 export const PAGE_SIZE_PARAM = 'limit'
 export const PAGE_SIZE_NO_LIMIT = 'all'
 
@@ -21,7 +22,7 @@ export class ChatMessageService {
     return this.httpClient.request<T>(method, this.baseUrl + path, {body, withCredentials: true, params})
   }
 
-  getList<T>(path: string, params: HttpParams = new HttpParams()): Observable<[]> {
+  getList<T>(path: string, params: HttpParams = new HttpParams()): Observable<ListResponse<T>> {
     if (!params.has(PAGE_SIZE_PARAM)) {
       params = params.set(PAGE_SIZE_PARAM, PAGE_SIZE)
     }
@@ -36,9 +37,7 @@ export class ChatMessageService {
     return this.request<T>('GET', path, params)
   }
 
-    post<T> (path: string, body?: any): Observable<T> {
+  post<T>(path: string, body?: any): Observable<T> {
     return this.request<T>('POST', path, undefined, body)
   }
-
-
 }

@@ -31,6 +31,7 @@ export class ChatComponent {
   textArea = new FormControl('')
   @ViewChildren('chatbox') messageBody!: any
   selectedConversation!: Conversation;
+  totalMessages = 0
 
   constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
               private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
@@ -43,7 +44,7 @@ export class ChatComponent {
 
     this.chatMessageServie.getList<ChatUser>('users').subscribe(
       data => {
-        this.users = data
+        this.users = data.results
       },
       (error: unknown) => {
         console.log(error)
@@ -51,7 +52,7 @@ export class ChatComponent {
 
     this.chatMessageServie.getList<Conversation>('conversations').subscribe(
       data => {
-        this.conversations = data
+        this.conversations = data.results
       },
       (error: unknown) => {
         console.log(error)
@@ -258,10 +259,12 @@ export class ChatComponent {
   openConversation() {
     this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
       data => {
-        this.messages = data
+        this.messages = data.results
+        this.totalMessages = data.count
       },
       (error: unknown) => {
         console.log(error)
       })
   }
+
 }

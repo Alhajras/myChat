@@ -68,6 +68,9 @@
       <div *ngIf="!messages.length" class="empty-conversation">
         Select a conversation from contacts.
       </div>
+      <div *ngIf="totalMessages > messages.length && messages.length !==0" class="empty-conversation">
+        <button type="button" pButton pRipple label="Load more" class="p-button-text p-mr-2 p-mb-2"></button>
+      </div>
       <div *ngFor="let message of messages" class="message-box-holder">
         <div *ngIf="message.sender===1" class="message-box">
           <p-avatar shape="circle" icon="pi pi-user"></p-avatar>
