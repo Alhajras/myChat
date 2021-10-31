@@ -42,7 +42,6 @@ export class ChatComponent {
     // this.messageBody.scrollTop = this.messageBody.scrollHeight - this.messageBody.clientHeight ;
     //     this.messageBody.scrollTop = this.messageBody.scrollHeight  ;
     var endpoint = "ws://" + 'localhost:8000' + '/ws/messages/'
-    console.log(endpoint)
     // let websocket = new WebSocket(endpoint)
 
     this.chatMessageServie.getList<ChatUser>('users').subscribe(
@@ -256,7 +255,6 @@ export class ChatComponent {
    * This is so expensive dont put heavy code
    */
   ngAfterViewChecked() {
-    console.log(this.scrollDown)
     if (this.scrollDown) {
       this.messageBody.last.nativeElement.scrollTop = this.messageBody.last.nativeElement.scrollHeight + 68.75;
     }
@@ -287,5 +285,38 @@ export class ChatComponent {
       (error: unknown) => {
         console.log(error)
       })
+  }
+
+  mockConversation() {
+
+  }
+
+  mockMessage() {
+    const length = 10
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+      + (currentdate.getMonth() + 1) + "/"
+      + currentdate.getFullYear() + " @ "
+      + currentdate.getHours() + ":"
+      + currentdate.getMinutes() + ":"
+      + currentdate.getSeconds();
+    const message: ChatMessage = {
+      message: result,
+      timestamp: currentdate.getHours() + ":"
+        + currentdate.getMinutes(),
+      seen: false,
+      channel: 'Local',
+      deleted: false,
+      sender: 2,
+      conversation: 1
+    }
+    this.messages.push(message);
+
   }
 }

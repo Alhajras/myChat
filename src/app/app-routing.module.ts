@@ -9,7 +9,7 @@ const routes: Routes = [
   },
     {
     path: 'chat',
-    canActivate: [IsAuthenticatedGuard],
+    // canActivate: [IsAuthenticatedGuard],
     loadChildren: async () => await import('./chat/chat.module').then(m => m.ChatModule),
   },
       {
