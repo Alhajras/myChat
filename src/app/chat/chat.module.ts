@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AvatarModule } from "primeng/avatar";
 import { ChatComponent } from "./chat.component";
 import { ChatRoutingModule } from "./chat-routing.module";
+import { CommonModule } from '@angular/common';
+import { DividerModule } from "primeng/divider";
 import { SharedModule } from "../shared/shared.module";
-import {AvatarModule} from "primeng/avatar";
-import {DividerModule} from "primeng/divider";
 
 @NgModule({
   declarations: [ChatComponent],

@@ -23,7 +23,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'conversations', ConversationViewSet)
-router.register(r'messages', ChatMessageViewSet)
+router.register(r'messages', ChatMessageViewSet, 'messages')
 
 
 urlpatterns = [

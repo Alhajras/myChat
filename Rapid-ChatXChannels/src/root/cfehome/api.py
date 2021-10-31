@@ -1,3 +1,4 @@
+from rest_framework.viewsets import GenericViewSet
 from ..chat.models import ChatUser, ChatMessage, Conversation
 from django.contrib import auth
 from django.contrib.auth import authenticate, get_user_model
@@ -5,11 +6,12 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from rest_framework import serializers, routers, viewsets
+from rest_framework import serializers, routers, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
 import json
+from django.db.models import QuerySet
 
 router = routers.DefaultRouter
 
@@ -110,9 +112,13 @@ class ChatMessageSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 # This is view should be moved to views
-class ChatMessageViewSet(viewsets.ModelViewSet):
-  queryset = ChatMessage.objects.all().order_by("-id")
+class ChatMessageViewSet(mixins.ListModelMixin, GenericViewSet):
   serializer_class = ChatMessageSerializer
+  filterset_fields = ["conversation"]
+
+
+  def get_queryset(self) -> QuerySet[ChatMessage]:
+    return ChatMessage.objects.for_request(self.request).order_by("-id")
 
 
 class ConversationSerializer(serializers.ModelSerializer):

@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.manager import BaseManager
+from django.http import HttpRequest
 
 
 class ChannelsTypes(models.TextChoices):
@@ -20,7 +22,23 @@ class Conversation(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   deleted = models.BooleanField()
 
+
+
+class NotificationQuerySet(models.QuerySet["Notification"]):
+  def for_request(self, request: HttpRequest):
+    if request.session.session_key:
+      id = request.GET.get('conversation', -1)
+      if id == -1:
+        return self.order_by("id")
+
+      return self.filter(conversation=id).order_by("id")
+    else:
+      return self.none()
+
+
 class ChatMessage(models.Model):
+  objects = BaseManager.from_queryset(NotificationQuerySet)()
+
   message = models.TextField()
   sender = models.ForeignKey(ChatUser, on_delete=models.PROTECT, related_name='sender')
   timestamp = models.DateTimeField(auto_now_add=True)
@@ -30,7 +48,6 @@ class ChatMessage(models.Model):
   )
   conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
   deleted = models.BooleanField()
-
 
 
 

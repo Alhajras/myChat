@@ -261,8 +261,9 @@ export class ChatComponent {
     }
   }
 
-  openConversation() {
-    this.chatMessageServie.getList<ChatMessage>('messages').subscribe(
+  openConversation(id: number) {
+    const params = new HttpParams({fromObject: {conversation: id}})
+    this.chatMessageServie.getList<ChatMessage>('messages', params).subscribe(
       data => {
         this.messages = data.results.reverse()
         this.totalMessages = data.count

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core'
-import {Observable} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {ChatMessage} from "../models/model";
-import {ListResponse} from "../models/list-response.model";
+import { ChatMessage } from "../models/model";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from '@angular/core'
+import { ListResponse } from "../models/list-response.model";
+import { Observable } from "rxjs";
 
 const PAGE_SIZE = 50
 export const PAGE_SIZE_PARAM = 'limit'
