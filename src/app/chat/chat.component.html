@@ -23,7 +23,7 @@
       <p-table [value]="conversations"
                selectionMode="single"
                [(selection)]="selectedConversation"
-               dataKey="name"
+               dataKey="id"
                (onRowSelect)="openConversation()"
                responsiveLayout="scroll">
         <ng-template pTemplate="caption">
@@ -43,7 +43,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-conversation>
           <tr
-[pSelectableRow]="conversation">
+            [pSelectableRow]="conversation">
             <td *ngIf="conversation.participant_1.id != users[0].id"
                 [pTooltip]='conversation.participant_1.email'
                 tooltipPosition="bottom">

@@ -253,6 +253,7 @@ export class ChatComponent {
 
   /**
    * This is so expensive dont put heavy code
+   * TODO fix this
    */
   ngAfterViewChecked() {
     if (this.scrollDown) {
