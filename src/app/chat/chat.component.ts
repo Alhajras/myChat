@@ -1,6 +1,6 @@
 import {ConfirmationService, MenuItem, MessageService} from 'primeng/api'
 import {ChatMessage, ChatUser, Conversation, Customer} from './models/model'
-import {Component, ViewChildren} from '@angular/core'
+import {Component, ViewChild, ViewChildren} from '@angular/core'
 import {CountryService} from './service/country.service'
 import {CustomerService} from './service/customer.service'
 import {OverlayPanel} from 'primeng/overlaypanel'
@@ -9,6 +9,7 @@ import {WebSocketSubject} from "rxjs/internal-compatibility";
 import {ChatMessageService} from "./service/chat-message.service";
 import {FormControl} from "@angular/forms";
 import {HttpParams} from "@angular/common/http";
+import {Table} from "primeng/table";
 
 interface Option {
   name: string
@@ -35,6 +36,7 @@ export class ChatComponent {
   totalMessages = 0
   nextOffset = 0
   scrollDown = true
+  @ViewChild('dt') dt: Table | undefined;
 
   constructor(private readonly countryService: CountryService, private readonly messageService: MessageService,
               private readonly customerService: CustomerService, private readonly productService: ProductService, private readonly chatMessageServie: ChatMessageService,
@@ -274,6 +276,10 @@ export class ChatComponent {
       (error: unknown) => {
         console.log(error)
       })
+  }
+
+  applyFilterGlobal($event: any, stringVal: string) {
+    this.dt?.filterGlobal(($event.target as HTMLInputElement).value, 'contains');
   }
 
   loadMore() {

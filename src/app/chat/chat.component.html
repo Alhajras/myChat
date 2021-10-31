@@ -20,7 +20,10 @@
 <div class="p-grid">
   <div class="p-col-4">
     <div class="p-card">
-      <p-table [value]="conversations"
+      <p-table #dt [value]="conversations"
+               [globalFilterFields]="['id', 'participant_1.first_name', 'participant_2.first_name',
+               'participant_1.last_name', 'participant_2.last_name',
+               'participant_1.email', 'participant_2.email']"
                selectionMode="single"
                [(selection)]="selectedConversation"
                dataKey="id"
@@ -31,7 +34,7 @@
             Contacts
             <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" placeholder="Global Search"/>
+                            <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"  placeholder="Global Search"/>
                         </span>
           </div>
         </ng-template>
