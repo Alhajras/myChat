@@ -238,7 +238,7 @@ export class ChatComponent {
       channel: 'Local',
       deleted: false,
       sender: 1,
-      conversation: 1
+      conversation: this.selectedConversation.id
     }
     this.chatMessageServie.postMessage(message).subscribe(
       data => {

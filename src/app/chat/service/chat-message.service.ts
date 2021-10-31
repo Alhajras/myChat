@@ -29,8 +29,8 @@ export class ChatMessageService {
     return this.get(path, params)
   }
 
-  postMessage(project: Partial<ChatMessage>): Observable<ChatMessage> {
-    return this.post<ChatMessage>(this.endpointPath, project)
+  postMessage(message: Partial<ChatMessage>): Observable<ChatMessage> {
+    return this.post<ChatMessage>(this.endpointPath, message)
   }
 
   get<T>(path: string, params?: HttpParams): Observable<T> {

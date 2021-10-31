@@ -112,7 +112,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 # This is view should be moved to views
-class ChatMessageViewSet(mixins.ListModelMixin, GenericViewSet):
+class ChatMessageViewSet(viewsets.ModelViewSet):
   serializer_class = ChatMessageSerializer
   filterset_fields = ["conversation"]
 

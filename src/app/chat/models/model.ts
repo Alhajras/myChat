@@ -50,6 +50,7 @@ export interface ChatUser {
 }
 
 export interface Conversation {
+  id: number,
   created_at: string,
   deleted: false,
   participant_1: number,
