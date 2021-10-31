@@ -40,6 +40,7 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
+            <th>ID</th>
             <th>Contact</th>
             <th style="width: 8rem">Action</th>
           </tr>
@@ -47,6 +48,7 @@
         <ng-template pTemplate="body" let-conversation>
           <tr
             [pSelectableRow]="conversation">
+            <td>{{conversation.id}}</td>
             <td *ngIf="conversation.participant_1.id != users[0].id"
                 [pTooltip]='conversation.participant_1.email'
                 tooltipPosition="bottom">
