@@ -1,21 +1,22 @@
-from rest_framework.viewsets import GenericViewSet
-from ..chat.models import ChatUser, ChatMessage, Conversation
+import json
+
 from django.contrib import auth
 from django.contrib.auth import authenticate, get_user_model
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from rest_framework import serializers, routers, viewsets, mixins
+from rest_framework import serializers, routers, viewsets
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
-import json
-from django.db.models import QuerySet
+
+from ..chat.models import ChatUser, ChatMessage, Conversation
 
 router = routers.DefaultRouter
 
-VERIFY_TOKEN = "7711df715abcfa28ace91507da2d28d907a2d2db3c7c6639b0"  # generated above
+VERIFY_TOKEN = "EAANGpdBZC534BABZCLDOJKZBq9o9FKvtuJsyS6CTOvYb3yX2EVYujcQSwnScjCw8xtTXTwp1V5uoIl0ZAzZBJ9blEDRkHkbtzmig3J8meX9ZAgMaGpVubbxReRgS330wLWOjFjqF4dyW6IeFSUQbi7IjBb24jOtFbMQZBPRZBCqjrFWZB12pjgIBh"  # generated above
 
 """
 FB_ENDPOINT & PAGE_ACCESS_TOKEN
@@ -68,13 +69,20 @@ class FacebookWebhookView(View):
     return HttpResponse(hub_challenge)
 
   def post(self, request, *args, **kwargs):
-    print('I got a message')
     incoming_message = json.loads(request.body.decode('utf-8'))
     for entry in incoming_message['entry']:
       for message in entry['messaging']:
         if 'message' in message:
           fb_user_id = message['sender']['id']  # sweet!
           fb_user_txt = message['message'].get('text')
+          timestamp = message['timestamp']
+          chat_user, _ = ChatUser.objects.get_or_create(first_name =fb_user_id ,email=f'{fb_user_id}@facebook.com')
+          chat_user_1  = ChatUser.objects.get(id=1)
+
+          print(chat_user)
+          print('-------------------------')
+          conv, _ = Conversation.objects.get_or_create(participant_2=chat_user, participant_1=chat_user_1, deleted = False)
+          mssg = ChatMessage.objects.create(sender= chat_user,conversation=conv, message=fb_user_txt,deleted = False)
           # if fb_user_txt:
           #   parse_and_send_fb_message(fb_user_id, fb_user_txt)
     return HttpResponse("Success", status=200)
@@ -118,7 +126,8 @@ class ChatMessageViewSet(viewsets.ModelViewSet):
 
 
   def get_queryset(self) -> QuerySet[ChatMessage]:
-    return ChatMessage.objects.for_request(self.request).order_by("-id")
+    conversation = self.request.GET.get('conversation', -1)
+    return ChatMessage.objects.filter(conversation__id=conversation).order_by("-id")
 
 
 class ConversationSerializer(serializers.ModelSerializer):
