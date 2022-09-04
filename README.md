@@ -1,5 +1,7 @@
 # MyChat
 
+![Alt Text](https://github.com/Alhajras/myChat/blob/main/Peek%202022-09-04%2013-53.gif)
+
 The aim of this project is to solve an iuse I had where I want to have one website that collect all my emails and messages from all my social media.
 At the moment only Facebook is integrated the rteason is that it is free the other channels like Whatsapp and instagram are not. 
 
