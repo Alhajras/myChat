@@ -5,9 +5,14 @@ At the moment only Facebook is integrated the rteason is that it is free the oth
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
 
-## Development server
+## Angular Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve --proxy-config proxy.conf.json` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Angular Development server
+Run `cd Rapid-ChatXChannels/src` and then `./manage runserver`
+
+Login with user: `admin`, pas: `admin`.
 
 ## Code scaffolding
 
