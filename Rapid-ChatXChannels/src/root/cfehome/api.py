@@ -16,7 +16,9 @@ from ..chat.models import ChatUser, ChatMessage, Conversation
 
 router = routers.DefaultRouter
 
-VERIFY_TOKEN = "EAANGpdBZC534BABZCLDOJKZBq9o9FKvtuJsyS6CTOvYb3yX2EVYujcQSwnScjCw8xtTXTwp1V5uoIl0ZAzZBJ9blEDRkHkbtzmig3J8meX9ZAgMaGpVubbxReRgS330wLWOjFjqF4dyW6IeFSUQbi7IjBb24jOtFbMQZBPRZBCqjrFWZB12pjgIBh"  # generated above
+# Copy this from your facebook account something like EAANGpdBZC534B**********
+VERIFY_TOKEN = ""  # generated above
+
 
 """
 FB_ENDPOINT & PAGE_ACCESS_TOKEN
